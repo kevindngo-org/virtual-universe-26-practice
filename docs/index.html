@@ -91,6 +91,29 @@
     details[open] summary { color: var(--ink); font-weight: 600; }
     details p { font-size: .93em; line-height: 1.6; margin: 0 0 14px; color: var(--muted); }
     code { font-family: "SFMono-Regular", Consolas, monospace; font-size: .9em; color: var(--ink); background: #f0f3f1; border: 1px solid #e3e9e5; border-radius: 3px; padding: 1px 3px; overflow-wrap: anywhere; }
+    .highlights { max-width: var(--content-width); margin: 0 auto 28px; padding: 36px 26px; border: 1px solid var(--line); }
+    .highlights-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; }
+    .highlights-heading h2 { margin-bottom: 8px; }
+    .highlights-status { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .topic-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
+    .topic-filter { min-height: 44px; padding: 9px 14px; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: var(--ink); font-size: 13px; line-height: 1.4; cursor: pointer; }
+    .topic-filter:hover { border-color: var(--green); background: var(--field); }
+    .topic-filter[aria-pressed="true"] { border-color: var(--green); background: var(--green); color: #fff; font-weight: 600; }
+    .highlight-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+    .highlight-card { height: 100%; padding: 20px; border: 1px solid var(--line); border-radius: 5px; background: var(--field); overflow-wrap: anywhere; }
+    .highlight-topic { margin: 0 0 10px; font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .highlight-card h3 { margin: 0 0 10px; font-size: 18px; line-height: 1.3; font-weight: 600; letter-spacing: -.02em; }
+    .highlight-summary, .highlight-try { margin: 0; font-size: 13px; line-height: 1.6; }
+    .highlight-summary { color: var(--muted); }
+    .highlight-try { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+    .highlights-retry { margin-top: 16px; min-height: 44px; cursor: pointer; }
+    .highlights [hidden] { display: none; }
+    @media (max-width: 960px) { .highlight-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 600px) {
+      .highlights { padding: 28px 20px; border-inline: 0; }
+      .highlight-grid { grid-template-columns: 1fr; }
+      .topic-filters { gap: 8px; }
+    }
     .keynote-cta { max-width: var(--content-width); margin-inline: auto; padding: 48px 24px; text-align: center; background: var(--field); border: 1px solid var(--line); border-top: 3px solid var(--green); }
     .keynote-cta .description { margin-inline: auto; }
     footer { max-width: var(--content-width); margin-inline: auto; padding: 20px 26px; display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; font-size: 12px; line-height: 1.5; color: var(--muted); }
@@ -203,6 +226,19 @@
           </div>
         </section>
       </div>
+      <section class="highlights" id="keynote-highlights" aria-labelledby="highlights-heading" data-api-base="http://localhost:3001">
+        <div class="highlights-heading">
+          <h2 id="highlights-heading">Keynote highlights</h2>
+          <p class="highlights-status" id="highlights-status" role="status" aria-live="polite" aria-atomic="true">Loading highlights...</p>
+        </div>
+        <p class="description">Find an announcement, then try it for yourself.</p>
+        <div class="topic-filters" id="topic-filters" role="group" aria-label="Filter highlights by topic">
+          <button class="topic-filter" type="button" aria-pressed="true" data-topic="">All</button>
+        </div>
+        <ul class="highlight-grid" id="highlight-grid" aria-label="Keynote highlights" aria-busy="true"></ul>
+        <button class="button highlights-retry" id="highlights-retry" type="button" hidden>Retry highlights</button>
+        <noscript><p class="description">Enable JavaScript to load highlights, or explore the keynote recap below.</p></noscript>
+      </section>
       <section class="keynote-cta" aria-labelledby="keynote-heading">
         <h2 id="keynote-heading">Catch up on the keynote highlights</h2>
         <p class="description">Explore the biggest announcements from GitHub Universe and see what's next.</p>
@@ -214,6 +250,7 @@
       <p>Need the app? <a href=" https://github.com/features/ai/github-app?utm_source=virtual-universe-26-insider-resources-cta-top-app-download&utm_medium=web&utm_campaign=universe-2026">Download GitHub Copilot</a></p>
     </footer>
   </div>
+  <script src="highlights.js" defer></script>
   <script>
     const screen = document.getElementById('terminal-screen');
     const terminalTitle = document.getElementById('terminal-title');
