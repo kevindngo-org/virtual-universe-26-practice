@@ -48,11 +48,23 @@ Learn about:
 
 ## Section 3: GitHub Universe Highlights
 
+### Preview the API-backed landing page
+
+Start the content API on port 3001, then run `python3 -m http.server 8000 --directory docs`
+from this repository and open <http://localhost:8000>. The keynote highlights load the
+API's six sample items and topic filters. The section's `data-api-base` attribute in
+`docs/index.html` configures the API URL; if omitted, it defaults to
+`http://localhost:3001`. The API must allow the preview origin through CORS.
+
+Filters send the topic's name to `/api/highlights?topic=...`; All omits the topic
+parameter. A failed request shows a retry button without changing the existing
+keynote recap link. Run `node --test tests/keynote-highlights.test.mjs` for renderer
+and contract checks.
+
 ### Putting it all together
 
 [![Open in Copilot App](https://img.shields.io/badge/Open_in_Copilot_App-238636?style=flat&logo=githubcopilot&logoColor=white)](https://github.com/copilot/app/launch?open=ghapp%3A%2F%2Fsession%2Fnew%3Frepo%3Doctodemo%252Fvirtual-universe-26%26canvas%3Duniverse-cheatsheet-artifact)
 
 1. [Attach a cheat sheet artifact](./github-virtual-universe-highlights/attach-a-cheat-sheet-artifact/): Attach an Artifact to an Issue and download a cheat sheet for everything in this repo. (Also find a ✨super duper secret surprise✨ at the end of this section)
 2. [GitHub Universe recap page](https://github.com/events/universe/recap/): View all the main announcements, with links to demos and resources.
-
 
